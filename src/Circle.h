@@ -14,14 +14,14 @@ extern Class CircleClass();
 
 /*Object Attributes*/
 typedef struct {
-	extends(Point);
+	OBJ_EXTENDS(Point);
 	int rad;
 } Circle;
 
 /*Object Methods*/
 typedef struct {
-	extends(methPoint);
-} methCircle;
+	OBJ_EXTENDS_METH(Point);
+} TYPE_METH(Circle);
 
 /*Object Creator*/
 extern Circle * newCircle(int x, int y, int rad);

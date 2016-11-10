@@ -12,12 +12,9 @@
 
 #include "Point-private.h"
 
-/* Private Object*/
-typedef struct {
-	Point pub;
-	privPoint priv;
-} _Point;
 
+/* Declare Private Object*/
+OBJ_DECLARE(Point);
 
 /*
  *  Declarations
@@ -29,25 +26,37 @@ void 		Point_ctor		(void * obj, va_list * app);
 void 		Point_draw		(const void * obj);
 void 		Point_move		(const void * obj, int dx, int dy);
 
+
 /*
  *  Implementations
  **/
-Class PointClass() {
-	static TYPE_METH(Point) meth;
-	static TYPE_CLASS(Point) class;
-	static Class pClass = NULL;
-	if (!pClass) {
-		pClass = &class;
-		PointClass_ctor(&class, &meth);
-	}
 
-	return pClass;
+
+/* Class Definition function
+ *
+ *   The function Name MUST be [Object name]Class
+ *   MUST call OBJ_START_CLASS macro
+ *
+ * */
+Class PointClass() {
+	OBJ_START_CLASS(Point);
 }
 
 
+/* Class Constructor:
+ *
+ *   The function name MUST be [Object name]Class_ctor
+ *   This function is called on the first call of [Object name]Class()
+ *   Should call the Class Constructor of SUPER Class and
+ *     fill up the object with his own parameters
+ *
+ * */
 void PointClass_ctor(void * class, void * meth) {
 
+/* Call Class Constructor of the SUPER Class */
 	superClass_ctor(ObjectClass(), class, meth);
+
+/* Fill up Object Parameters*/
 
 	/* Public Methods*/
 	CAST_METH(Point, meth)->draw = Point_draw;
@@ -59,11 +68,14 @@ void PointClass_ctor(void * class, void * meth) {
 	CAST_CLASS(Object, class)->ctor 		= Point_ctor;
 }
 
+
 Point * newPoint(int x, int y) {
 	Point * obj;
 	printf("creating Point...\n");
 
-	obj = newObject(PointClass(), sizeof(_Point), x, y);
+	/*sizeof(_Point)*/
+
+	obj = newObject(PointClass(), OBJ_SIZE(Point), x, y);
 	assert(obj);
 
 	return obj;

@@ -13,13 +13,14 @@
 
 /* Private Methods */
 typedef struct {
-	extends(classPoint);
-} classCircle;
+	OBJ_EXTENDS_CLASS(Point);
+
+} TYPE_CLASS(Circle);
 
 /* Private Attributes*/
 typedef struct {
-	extends(privPoint);
-} privCircle;
+	OBJ_EXTENDS_PRIV(Point);
 
+} TYPE_PRIV(Circle);
 
 #endif /* CIRCLE_PRIVATE_H_ */

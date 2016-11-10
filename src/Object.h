@@ -13,10 +13,19 @@
 
 typedef const void * Class, Meth;
 
-extern Class ObjectClass();
 
-/* class Definition */
-#define extends(x)		x _
+/* Macros */
+
+#define TYPE_METH(obj_type)			meth##obj_type
+
+#define CAST(obj_type,var)			((obj_type *)(var))
+#define CAST_METH(obj_type,var)		((TYPE_METH(obj_type) *)(var))
+
+#define OBJ_EXTENDS(x)			x _
+#define OBJ_EXTENDS_METH(x)		TYPE_METH(x) _
+/*********************/
+
+extern Class ObjectClass();
 
 /*Object Attributes*/
 typedef struct {
@@ -27,12 +36,8 @@ typedef struct {
 /*Object Methods*/
 typedef struct {
 	void (*destroy)(void * obj);
-} methObject;
+} TYPE_METH(Object);
 
-#define TYPE_METH(obj_type)			meth##obj_type
-
-#define CAST(obj_type,var)			((obj_type *)(var))
-#define CAST_METH(obj_type,var)		((TYPE_METH(obj_type) *)(var))
 
 
 extern const void * Interface(void * obj, Class class);

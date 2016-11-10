@@ -11,15 +11,21 @@
 #include "Object-private.h"
 #include "Point.h"
 
-/* Private Attributes*/
-typedef struct {
-	extends(privObject);
-} privPoint;
+
 
 /* Private Methods */
 typedef struct {
-	extends(classObject);
-} classPoint;
+	OBJ_EXTENDS_CLASS(Object);
+
+} TYPE_CLASS(Point);
+
+
+/* Private Attributes*/
+typedef struct {
+	OBJ_EXTENDS_PRIV(Object);
+
+} TYPE_PRIV(Point);
+
 
 
 #endif /* POINT_PRIVATE_H_ */

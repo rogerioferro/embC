@@ -14,17 +14,17 @@ extern Class PointClass();
 
 /*Object Attributes*/
 typedef struct {
-	extends(Object);
+	OBJ_EXTENDS(Object);
 	int x;
 	int y;
 } Point;
 
 /*Object Methods*/
 typedef struct {
-	extends(methObject);
+	OBJ_EXTENDS_METH(Object);
 	void (*draw)(const void * obj);
 	void (*move)(const void * obj, int dx, int dy);
-} methPoint;
+} TYPE_METH(Point);
 
 /*Object Creator*/
 extern Point * newPoint(int x, int y);

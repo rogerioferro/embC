@@ -11,11 +11,8 @@
 
 #include "Circle-private.h"
 
-/* Private Object*/
-typedef struct {
-	Circle pub;
-	privCircle priv;
-} _Circle;
+/* Declare Private Object*/
+OBJ_DECLARE(Circle);
 
 
 /*
@@ -31,18 +28,24 @@ void Circle_draw(const void * obj);
  *  Implementations
  **/
 
+/* Class Definition function
+ *
+ *   The function Name MUST be [Object name]Class
+ *   MUST call OBJ_START_CLASS macro
+ *
+ * */
 Class CircleClass() {
-	static TYPE_METH(Circle) meths; /* Public Methods*/
-	static TYPE_CLASS(Circle) class; /* Private Methods*/
-
-	static Class pClass = NULL;
-	if (!pClass) {
-		pClass = &class;
-		CircleClass_ctor(&class, &meths);
-	}
-	return pClass;
+	OBJ_START_CLASS(Circle);
 }
 
+/* Class Constructor:
+ *
+ *   The function name MUST be [Object name]Class_ctor
+ *   This function is called on the first call of [Object name]Class()
+ *   Should call the Class Constructor of SUPER Class and
+ *     fill up the object with his own parameters
+ *
+ * */
 void CircleClass_ctor(void * class, void * meth) {
 
 	superClass_ctor(PointClass(), class, meth);
@@ -62,7 +65,7 @@ Circle * newCircle(int x, int y, int rad) {
 
 	printf("creating Circle...\n");
 
-	obj = newObject(CircleClass(), sizeof(_Circle), x, y, rad);
+	obj = newObject(CircleClass(), OBJ_SIZE(Circle), x, y, rad);
 
 	assert(obj);
 
