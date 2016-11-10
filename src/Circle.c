@@ -63,8 +63,6 @@ Circle * newCircle(int x, int y, int rad) {
 
 	Circle * obj;
 
-	printf("creating Circle...\n");
-
 	obj = newObject(CircleClass(), OBJ_SIZE(Circle), x, y, rad);
 
 	assert(obj);
@@ -77,8 +75,6 @@ void Circle_ctor(void * obj, va_list * app) {
 	super_ctor( CircleClass(), obj, app);
 
 	CAST(Circle,obj)->rad = va_arg(*app, int);
-
-	printf("Circle_ctor...\n");
 }
 
 void Circle_draw(const void * obj) {

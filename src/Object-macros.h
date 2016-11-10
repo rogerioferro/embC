@@ -9,7 +9,6 @@
 #define OBJECT_MACROS_H_
 
 
-
 #define TYPE_OBJ(obj_type)		_##obj_type
 #define TYPE_CLASS(obj_type)	class##obj_type
 #define TYPE_PRIV(obj_type)		priv##obj_type
@@ -17,8 +16,9 @@
 #define CAST_CLASS(obj_type,var)	((TYPE_CLASS(obj_type) *)(var))
 #define CAST_PRIV(obj_type,var)		((TYPE_PRIV(obj_type) *)(var))
 
-#define privOf(o)	(OBJECT(o)->_priv)
-#define classOf(o)	(OBJECT(o)->_class)
+#define privOf(o)		(void *)(OBJECT(o)->_priv)
+#define classOf(o)		(void *)(OBJECT(o)->_class)
+#define	superClassOf(o)	(void *)(OBJECT_CLASS(classOf(obj))->super)
 
 #define super_ctor(class, obj, app)				CAST_CLASS(Object,OBJECT_CLASS(class)->super)->ctor(obj, app)
 #define superClass_ctor(super, class, inter) 	CAST_CLASS(Object,super)->class_ctor(class, inter)
@@ -46,5 +46,9 @@
 		return pClass;						\
 	}while(0)
 
+/* Macro to be put on Interface Class Definition.
+ *
+*/
+#define OBJ_START_INTERFACE_CLASS()	static char id; return (Class)&id
 
 #endif /* OBJECT_MACROS_H_ */

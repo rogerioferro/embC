@@ -71,9 +71,6 @@ void PointClass_ctor(void * class, void * meth) {
 
 Point * newPoint(int x, int y) {
 	Point * obj;
-	printf("creating Point...\n");
-
-	/*sizeof(_Point)*/
 
 	obj = newObject(PointClass(), OBJ_SIZE(Point), x, y);
 	assert(obj);
@@ -90,7 +87,6 @@ void Point_ctor(void * obj, va_list * app) {
 	self->x = va_arg(*app, int);
 	self->y = va_arg(*app, int);
 
-	printf("Point_ctor...\n");
 }
 
 /*Public:*/

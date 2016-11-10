@@ -10,11 +10,8 @@
 
 #include "Object-private.h"
 
-/* Private Object*/
-typedef struct {
-	Object pub;
-	privObject priv;
-} _Object;
+/* Declare Private Object*/
+OBJ_DECLARE(Object);
 
 /*
  *  Declarations
@@ -34,16 +31,14 @@ void 			Object_destroy		(void * obj);
  *  Implementations
  **/
 
+/* Class Definition function
+ *
+ *   The function Name MUST be [Object name]Class
+ *   MUST call OBJ_START_CLASS macro
+ *
+ * */
 Class ObjectClass() {
-	static TYPE_METH(Object) meths; /* Public Methods */
-	static TYPE_CLASS(Object) class; /* Private Methods */
-	static Class pClass = NULL;
-
-	if (!pClass) {
-		pClass = &class;
-		ObjectClass_ctor(&class, &meths);
-	}
-	return pClass;
+	OBJ_START_CLASS(Object);
 }
 
 void ObjectClass_ctor(void * class, void * meths) {
@@ -84,7 +79,6 @@ void * newObject(const void * class, ...) {
 
 void Object_ctor(void * obj, va_list * app) {
 	assert(obj);
-	printf("Object_ctor...\n");
 }
 
 const void * Object_getInterface(void * obj, Class class) {
@@ -128,8 +122,10 @@ const void * isOf(void * obj, Class class) {
  * ObjIterface Selector
  * */
 const void * Interface(void * obj, Class class) {
-	const TYPE_CLASS(Object) * obj_class = classOf(obj);
+	const TYPE_CLASS(Object) * obj_class;
 	assert(obj && class);
+	obj_class = classOf(obj);
+	assert(obj_class);
 	return obj_class->getInterface(obj, class);
 }
 
