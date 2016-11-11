@@ -26,33 +26,32 @@ int main(int argc, char ** argv) {
 	objs[6] = newPoint(4, 5);
 	objs[7] = newCar();
 	objs[8] = newCircle(3, 7, 5);
-	objs[9] = NULL;
+	objs[9] = newAmbulance();
 
 
 	{
-		Object ** p;
+		int i;
 		const void * meths;
-		p = (Object **)objs;
-		while (*p) {
-			meths = Interface(*p, PointClass());
+		for(i = 0; i < MAX; i++) {
+			printf("--- Object %d ---\n", i);
+			meths = Interface(objs[i], PointClass());
 			if (meths) {
-				CAST_METH(Point,meths)->draw(*p);
-				CAST_METH(Point,meths)->move(*p, 10, 20);
-				CAST_METH(Point,meths)->draw(*p);
+				CAST_METH(Point,meths)->draw(objs[i]);
+				CAST_METH(Point,meths)->move(objs[i], 10, 20);
+				CAST_METH(Point,meths)->draw(objs[i]);
 			}
-			meths = Interface(*p, SoundClass());
+			meths = Interface(objs[i], SoundClass());
 			if (meths) {
-				CAST_METH(Sound,meths)->make_noise(*p);
+				CAST_METH(Sound,meths)->make_noise(objs[i]);
 			}
-			meths = Interface(*p, CarClass());
+			meths = Interface(objs[i], CarClass());
 			if (meths) {
-				CAST_METH(Car,meths)->run(*p);
+				CAST_METH(Car,meths)->run(objs[i]);
 			}
-			meths = Interface(*p, ObjectClass());
-			CAST_METH(Object,meths)->destroy(*p);
-			p++;
+			meths = Interface(objs[i], ObjectClass());
+			CAST_METH(Object,meths)->destroy(objs[i]);
 		}
 	}
 
-	return 0;
+	return 0 ;
 }
