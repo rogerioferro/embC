@@ -13,7 +13,7 @@ Is possible to implements these common features:
 
 The core files that implements Object/Class mechanism are:
 
-* Object-macros.h : Contain the macros to help the design be more clean em less verbose.
+* Object-macros.h : Contain the macros to help the design be more clean and less verbose.
 * Object-private.h : Contain the private declaration of **Object** 
 * Object.h : Contain the public declaration of **Object**
 * Object.c : Contain the implementation on **Object**
