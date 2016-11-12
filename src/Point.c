@@ -54,7 +54,7 @@ Class PointClass() {
 void PointClass_ctor(void * class, void * meth) {
 
 /* Call Class Constructor of the SUPER Class */
-	superClass_ctor(ObjectClass(), class, meth);
+	OBJECT_CLASS(ObjectClass())->class_ctor(class, meth);
 
 /* Fill up Object Parameters*/
 

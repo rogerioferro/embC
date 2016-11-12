@@ -53,7 +53,7 @@ Class AmbulanceClass() {
 void AmbulanceClass_ctor(void * class, void * meth) {
 
 /* Call Class Constructor of the SUPER Class */
-	superClass_ctor(CarClass(), class, meth);
+	OBJECT_CLASS(CarClass())->class_ctor(class, meth);
 
 /* Fill up Object Parameters*/
 

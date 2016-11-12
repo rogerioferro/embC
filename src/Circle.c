@@ -48,7 +48,7 @@ Class CircleClass() {
  * */
 void CircleClass_ctor(void * class, void * meth) {
 
-	superClass_ctor(PointClass(), class, meth);
+	OBJECT_CLASS(PointClass())->class_ctor(class, meth);
 
 	/* Public Methods*/
 	CAST_METH(Point, meth)->draw = Circle_draw;

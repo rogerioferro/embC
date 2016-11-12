@@ -54,7 +54,7 @@ Class CarClass() {
 void CarClass_ctor(void * class, void * meth) {
 
 /* Call Class Constructor of the SUPER Class */
-	superClass_ctor(ObjectClass(), class, meth);
+	OBJECT_CLASS(ObjectClass())->class_ctor(class, meth);
 
 /* Fill up Object Parameters*/
 
@@ -86,7 +86,7 @@ const void * Car_getInterface(void * obj, Class class){
 	if (class == SoundClass())
 		return & CAST_METH(Car, CAST_PRIV(Object,privOf(obj))->meths)->sound_meth;
 
-	return OBJECT_CLASS(ObjectClass())->getInterface(obj, class);
+	return OBJECT_CLASS(super(CarClass()))->getInterface(obj, class);
 }
 
 

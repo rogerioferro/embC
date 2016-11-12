@@ -18,10 +18,10 @@
 
 #define privOf(o)		(void *)(OBJECT(o)->_priv)
 #define classOf(o)		(void *)(OBJECT(o)->_class)
-#define	superClassOf(o)	(void *)(OBJECT_CLASS(classOf(obj))->super)
+#define	superOf(o)	(void *)(OBJECT_CLASS(classOf(obj))->super)
 
-#define super_ctor(class, obj, app)				CAST_CLASS(Object,OBJECT_CLASS(class)->super)->ctor(obj, app)
-#define superClass_ctor(super, class, inter) 	CAST_CLASS(Object,super)->class_ctor(class, inter)
+#define super(class)							(OBJECT_CLASS(class)->super)
+#define super_ctor(class, obj, app)				CAST_CLASS(Object,super(class))->ctor(obj, app)
 
 #define OBJ_DECLARE(x) 	typedef struct {x pub; TYPE_PRIV(x) priv;}TYPE_OBJ(x)
 #define OBJ_SIZE(x)		sizeof(TYPE_OBJ(x))
