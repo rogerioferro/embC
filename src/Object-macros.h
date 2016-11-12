@@ -17,8 +17,9 @@
 #define CAST_PRIV(obj_type,var)		((TYPE_PRIV(obj_type) *)(var))
 
 #define privOf(o)		(void *)(OBJECT(o)->_priv)
+#define methOf(o)		(void *)(CAST_PRIV(Object,privOf(obj))->meths)
 #define classOf(o)		(void *)(OBJECT(o)->_class)
-#define	superOf(o)	(void *)(OBJECT_CLASS(classOf(obj))->super)
+#define	superOf(o)		(void *)(OBJECT_CLASS(classOf(obj))->super)
 
 #define super(class)							(OBJECT_CLASS(class)->super)
 #define super_ctor(class, obj, app)				CAST_CLASS(Object,super(class))->ctor(obj, app)

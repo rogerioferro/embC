@@ -84,7 +84,7 @@ Car * newCar() {
 const void * Car_getInterface(void * obj, Class class){
 
 	if (class == SoundClass())
-		return & CAST_METH(Car, CAST_PRIV(Object,privOf(obj))->meths)->sound_meth;
+		return & CAST_METH(Car, methOf(obj))->sound_meth;
 
 	return OBJECT_CLASS(super(CarClass()))->getInterface(obj, class);
 }
