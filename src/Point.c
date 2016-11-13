@@ -22,7 +22,7 @@ OBJ_DECLARE(Point);
 
 Point * 	newPoint		(int x, int y);
 void 		PointClass_ctor	(void * class, void * meth);
-void 		Point_ctor		(void * obj, va_list * app);
+void 		Point_ctor		(const void * obj, va_list * app);
 void 		Point_draw		(const void * obj);
 void 		Point_move		(const void * obj, int dx, int dy);
 
@@ -72,15 +72,15 @@ void PointClass_ctor(void * class, void * meth) {
 Point * newPoint(int x, int y) {
 	Point * obj;
 
-	obj = newObject(PointClass(), OBJ_SIZE(Point), x, y);
+	obj = newObject(PointClass(), OBJ_SIZE(Point), OBJ_PRIV_OFFSET(Point), x, y);
 	assert(obj);
 
 	return obj;
 }
 
 
-void Point_ctor(void * obj, va_list * app) {
-	Point * self = obj;
+void Point_ctor(const void * obj, va_list * app) {
+	Point * self = (void*)obj;
 
 	super_ctor(PointClass(), obj, app);
 

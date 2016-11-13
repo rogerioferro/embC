@@ -63,7 +63,7 @@ Circle * newCircle(int x, int y, int rad) {
 
 	Circle * obj;
 
-	obj = newObject(CircleClass(), OBJ_SIZE(Circle), x, y, rad);
+	obj = newObject(CircleClass(), OBJ_SIZE(Circle), OBJ_PRIV_OFFSET(Circle), x, y, rad);
 
 	assert(obj);
 

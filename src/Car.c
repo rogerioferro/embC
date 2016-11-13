@@ -21,7 +21,7 @@ OBJ_DECLARE(Car);
 
 Car * 			newCar				();
 void 			CarClass_ctor		(void * class, void * meth);
-const void * 	Car_getInterface	(void * obj, Class class);
+const void * 	Car_getInterface	(const void * obj, Class class);
 void 			Car_run 			(const void * obj);
 void 			Car_make_noise  	(const void * obj);
 
@@ -75,13 +75,13 @@ void CarClass_ctor(void * class, void * meth) {
 Car * newCar() {
 	Car * obj;
 
-	obj = newObject(CarClass(), OBJ_SIZE(Car));
+	obj = newObject(CarClass(), OBJ_SIZE(Car), OBJ_PRIV_OFFSET(Car));
 	assert(obj);
 
 	return obj;
 }
 
-const void * Car_getInterface(void * obj, Class class){
+const void * Car_getInterface(const void * obj, Class class){
 
 	if (class == SoundClass())
 		return & CAST_METH(Car, methOf(obj))->sound_meth;

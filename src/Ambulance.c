@@ -73,7 +73,7 @@ void AmbulanceClass_ctor(void * class, void * meth) {
 Ambulance * newAmbulance() {
 	Ambulance * obj;
 
-	obj = newObject(AmbulanceClass(), OBJ_SIZE(Ambulance));
+	obj = newObject(AmbulanceClass(), OBJ_SIZE(Ambulance), OBJ_PRIV_OFFSET(Ambulance));
 	assert(obj);
 
 	return obj;

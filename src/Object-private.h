@@ -22,9 +22,9 @@ typedef struct {
 
 	/* Constructors */
 	void (*class_ctor)(void * class, void * meths);
-	void (*ctor)(void * obj, va_list * app);
+	void (*ctor)(const void * obj, va_list * app);
 	/* return the Class interface if implemented */
-	const void * (*getInterface)(void * obj, Class class);
+	const void * (*getInterface)(const void * obj, Class class);
 
 } TYPE_CLASS(Object);
 
@@ -52,6 +52,6 @@ extern void * newObject (const void * _class, ...);
 /* Check if obj is of class
  *
  * */
-extern const void * isOf (void * obj, Class class);
+extern bool isOf (const void * obj, Class class);
 
 #endif /* OBJECT_PRIVATE_H_ */

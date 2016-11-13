@@ -8,6 +8,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
+
 #include "Object-private.h"
 
 /* Declare Private Object*/
@@ -21,11 +22,11 @@ void * 			newObject			(const void * class, ...);
 
 /*Private Methods*/
 void 			ObjectClass_ctor	(void * _meths_, void * meths_);
-void 			Object_ctor			(void * obj, va_list * app);
-const void *	Object_getInterface	(void * obj, Class class);
+void 			Object_ctor			(const void * obj, va_list * app);
+const void *	Object_getInterface	(const void * obj, Class class);
 
 /*Public Methods*/
-void 			Object_destroy		(void * obj);
+void 			Object_destroy		(const void * obj);
 
 /*
  *  Implementations
@@ -55,44 +56,47 @@ void ObjectClass_ctor(void * class, void * meths) {
 }
 
 void * newObject(const void * class, ...) {
-	Object * obj;
-	size_t obj_size;
-	va_list ap;
+	Object * 	obj;
+	va_list 	ap;
+	size_t		obj_size, priv_offset;
 
 	va_start(ap, class);
-	obj_size	= va_arg(ap, size_t);
-	obj			= calloc(1, obj_size);
+
+	obj_size	=	va_arg(ap, size_t);
+	priv_offset	=	va_arg(ap, size_t);
+
+	obj			= malloc(obj_size);
 
 	assert(obj);
 
 	obj->_class	= class;
-	obj->_priv	= (const void *) ((size_t) obj + obj_size - sizeof(void *));
+	obj->_priv	= (void *)((size_t)obj + priv_offset);
 
 	CAST_PRIV(Object,privOf(obj))->meths = CAST_CLASS(Object,class)->meths;
 
-	CAST_CLASS(Object,class)->ctor(obj, &ap);
+	OBJECT_CLASS(class)->ctor(obj, &ap);
 
 	va_end(ap);
 
 	return obj;
 }
 
-void Object_ctor(void * obj, va_list * app) {
+void Object_ctor(const void * obj, va_list * app) {
 	assert(obj);
 }
 
-const void * Object_getInterface(void * obj, Class class) {
+const void * Object_getInterface(const void * obj, Class class) {
 	if (isOf(obj, class)) {
 		return CAST_PRIV(Object,privOf(obj))->meths;
 	}
 	return NULL;
 }
 
-void Object_destroy(void * obj) {
+void Object_destroy(const void * obj) {
 
-	if ( isOf( obj, ObjectClass() ) )
-		free(obj);
-
+	if ( isOf( obj, ObjectClass() ) ){
+		free((void *)obj);
+	}
 }
 
 
@@ -100,7 +104,7 @@ void Object_destroy(void * obj) {
  * PROTECT:
  *
  * */
-const void * isOf(void * obj, Class class) {
+bool  isOf(const void * obj, Class class) {
 
 	const TYPE_CLASS(Object) * obj_class;
 
@@ -110,10 +114,10 @@ const void * isOf(void * obj, Class class) {
 
 	while (obj_class) {
 		if (obj_class == class)
-			return class;
+			return true;
 		obj_class = obj_class->super;
 	}
-	return NULL;
+	return false;
 }
 
 
@@ -121,11 +125,20 @@ const void * isOf(void * obj, Class class) {
  * PUBLIC:
  * ObjIterface Selector
  * */
-const void * Interface(void * obj, Class class) {
-	const TYPE_CLASS(Object) * obj_class;
+const void * Interface(const void * obj, Class class) {
 	assert(obj && class);
-	obj_class = classOf(obj);
-	assert(obj_class);
-	return obj_class->getInterface(obj, class);
+	if (isOf(obj,ObjectClass())){
+		const TYPE_CLASS(Object) * obj_class;
+		obj_class = classOf(obj);
+		assert(obj_class);
+		return obj_class->getInterface(obj, class);
+	}
+	return NULL;
 }
 
+
+void Destroy(const void * obj){
+	if (isOf(obj,ObjectClass())){
+		CAST_METH(Object, methOf(obj))->destroy(obj);
+	}
+}

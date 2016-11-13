@@ -35,11 +35,12 @@ typedef struct {
 
 /*Object Methods*/
 typedef struct {
-	void (*destroy)(void * obj);
+	void (*destroy)(const void * obj);
 } TYPE_METH(Object);
 
 
 
-extern const void * Interface(void * obj, Class class);
+extern const void * Interface	(const void * obj, Class class);
+extern void			Destroy 	(const void * obj);
 
 #endif /* OBJECT_H_ */

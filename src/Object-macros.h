@@ -8,6 +8,10 @@
 #ifndef OBJECT_MACROS_H_
 #define OBJECT_MACROS_H_
 
+#ifndef bool
+	typedef enum {false=0, true=1} bool;
+#endif
+
 
 #define TYPE_OBJ(obj_type)		_##obj_type
 #define TYPE_CLASS(obj_type)	class##obj_type
@@ -17,15 +21,16 @@
 #define CAST_PRIV(obj_type,var)		((TYPE_PRIV(obj_type) *)(var))
 
 #define privOf(o)		(void *)(OBJECT(o)->_priv)
-#define methOf(o)		(void *)(CAST_PRIV(Object,privOf(obj))->meths)
+#define methOf(o)		(void *)(CAST_PRIV(Object,privOf(o))->meths)
 #define classOf(o)		(void *)(OBJECT(o)->_class)
 #define	superOf(o)		(void *)(OBJECT_CLASS(classOf(obj))->super)
 
 #define super(class)							(OBJECT_CLASS(class)->super)
 #define super_ctor(class, obj, app)				CAST_CLASS(Object,super(class))->ctor(obj, app)
 
-#define OBJ_DECLARE(x) 	typedef struct {x pub; TYPE_PRIV(x) priv;}TYPE_OBJ(x)
-#define OBJ_SIZE(x)		sizeof(TYPE_OBJ(x))
+#define OBJ_DECLARE(x) 		typedef struct {x pub; TYPE_PRIV(x) priv;}TYPE_OBJ(x)
+#define OBJ_SIZE(x)			sizeof(TYPE_OBJ(x))
+#define OBJ_PRIV_OFFSET(x)	offsetof(TYPE_OBJ(x), priv)
 
 #define OBJ_EXTENDS_CLASS(x)	TYPE_CLASS(x) _
 #define OBJ_EXTENDS_PRIV(x)		TYPE_PRIV(x) _
