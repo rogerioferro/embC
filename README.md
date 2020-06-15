@@ -1,6 +1,6 @@
 # embC
 
-embC is a Design Pattern to implements object-oriented design in pure Ansi C.
+embC implements object-oriented design in pure Ansi C.
 Is possible to implements these common features:
 
 1. Object/Class;
